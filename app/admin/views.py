@@ -6,7 +6,7 @@ import sys
 from . import admin
 from .forms import HouseForm, SiteForm
 from .. import db
-from ..models import House, Site
+from ..models import House, Site,User
 
 '''def check_admin():
     if not current_user.is_admin:
@@ -14,7 +14,9 @@ from ..models import House, Site
     """
     Prevent non-admins from accessing the page
     """
-    
+     user = User.query.get_or_404(id)
+        usid = user.id;
+        print(usid);
 '''
 # House Views
 
@@ -37,7 +39,8 @@ def add_house():
     Add a house to the database
     """
     #check_admin()
-
+    usid = current_user.id;
+    print(usid)
     add_house = True
 
     form = HouseForm()
@@ -53,7 +56,7 @@ def add_house():
                         balcony=int(form.balcony.data),
                         utility=int(form.utility.data),
                         description=str(form.description.data),
-                        owner_id=1)
+                        owner_id=usid)
         try:
             # add house to the database
             print(db)
@@ -82,29 +85,32 @@ def edit_house(id):
    # check_admin()
 
     add_house = False
-
     house = House.query.get_or_404(id)
     form = HouseForm(obj=house)
-    if form.validate_on_submit():
-        house.type=form.type.data
-        house.house_num=form.house_num.data
-        house.area=form.area.data
-        house.city=form.city.data
-        house.room_cnt=form.room_cnt.data
-        house.bath_cnt=form.bath_cnt.data
-        house.amount=form.amount.data
-        house.balcony=int(form.balcony.data)
-        house.utility=int(form.utility.data)
-        house.description=form.description.data
-        db.session.add(house)
-        print("%K%%%%%%%%%%%%%%%%%%")
-        db.session.commit()
-        flash('You have successfully edited the house.')
+    if current_user.id == house.owner_id:
+        
+        if form.validate_on_submit():
+            house.type=form.type.data
+            house.house_num=form.house_num.data
+            house.area=form.area.data
+            house.city=form.city.data
+            house.room_cnt=form.room_cnt.data
+            house.bath_cnt=form.bath_cnt.data
+            house.amount=form.amount.data
+            house.balcony=int(form.balcony.data)
+            house.utility=int(form.utility.data)
+            house.description=form.description.data
+            db.session.add(house)
+            print("%K%%%%%%%%%%%%%%%%%%")
+            db.session.commit()
+            flash('You have successfully edited the house.')
 
-        # redirect to the departments page
+            # redirect to the departments page
+            return redirect(url_for('admin.list_houses'))
+    else:
+        flash('Cannot edit house')   
         return redirect(url_for('admin.list_houses'))
-
-
+    
     return render_template('admin/houses/house.html', action="Edit",add_house=add_house, form=form,house=house, title="Edit House")
 
 @admin.route('/houses/delete/<int:id>', methods=['GET', 'POST'])
@@ -116,15 +122,17 @@ def delete_house(id):
     #check_admin()
 
     house = House.query.get_or_404(id)
-    db.session.delete(house)
-    db.session.commit()
-    flash('You have successfully deleted the house.')
+    if current_user.id == house.owner_id:
+        db.session.delete(house)
+        db.session.commit()
+        flash('You have successfully deleted the house.')
 
-    # redirect to the departments page
+        # redirect to the departments page
+        return redirect(url_for('admin.list_houses'))
+        return render_template(title="Delete House")
+        
+    flash('Cannot delete house')
     return redirect(url_for('admin.list_houses'))
-
-    return render_template(title="Delete House")
-    
 # Site Views
 
 @admin.route('/sites', methods=['GET', 'POST'])
@@ -146,12 +154,13 @@ def add_site():
     Add a house to the database
     """
     #check_admin()
-
+    usid = current_user.id;
+    print(usid)
     add_site = True
 
     form = SiteForm()
     if form.validate_on_submit():
-        print(form.type.data)
+        
         site = Site(type=str(form.type.data),
                         site_num=int(form.site_num.data),
                         area=str(form.area.data),
@@ -160,7 +169,7 @@ def add_site():
                         amount=int(form.amount.data),
                         
                         description=str(form.description.data),
-                        owner_id=1)
+                        owner_id=usid)
         try:
             # add house to the database
             print(db)
@@ -192,24 +201,27 @@ def edit_site(id):
 
     site = Site.query.get_or_404(id)
     form = SiteForm(obj=site)
-    if form.validate_on_submit():
-        site.type=form.type.data
-        site.site_num=form.site_num.data
-        site.area=form.area.data
-        site.city=form.city.data
-        site.sq_feet=form.sq_feet.data
-        site.amount=form.amount.data
+    if current_user.id == site.owner_id:
+        if form.validate_on_submit():
+            site.type=form.type.data
+            site.site_num=form.site_num.data
+            site.area=form.area.data
+            site.city=form.city.data
+            site.sq_feet=form.sq_feet.data
+            site.amount=form.amount.data
         
-        site.description=form.description.data
-        db.session.add(site)
-        print("%K%%%%%%%%%%%%%%%%%%")
-        db.session.commit()
-        flash('You have successfully edited the site.')
+            site.description=form.description.data
+            db.session.add(site)
+            print("%K%%%%%%%%%%%%%%%%%%")
+            db.session.commit()
+            flash('You have successfully edited the site.')
 
-        # redirect to the departments page
-        return redirect(url_for('admin.list_sites'))
-
-
+            # redirect to the departments page
+            return redirect(url_for('admin.list_sites'))
+    else:
+        flash('Cannot edit the site')
+        return redirect(url_for('admin.list_sites')) 
+        
     return render_template('admin/sites/site.html', action="Edit",add_site=add_site, form=form,site=site, title="Edit Site")
 
 @admin.route('/sites/delete/<int:id>', methods=['GET', 'POST'])
@@ -219,13 +231,16 @@ def delete_site(id):
     Delete a de from the database
     """
     #check_admin()
-
+    
     site = Site.query.get_or_404(id)
-    db.session.delete(site)
-    db.session.commit()
-    flash('You have successfully deleted the Site.')
+    if current_user.id == site.owner_id:
+        db.session.delete(site)
+        db.session.commit()
+        flash('You have successfully deleted the Site.')
 
-    # redirect to the departments page
+        # redirect to the departments page
+        return redirect(url_for('admin.list_sites'))
+    flash('Cannot delete the site')
     return redirect(url_for('admin.list_sites'))
-
+    
     return render_template(title="Delete Site")
