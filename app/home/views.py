@@ -34,5 +34,5 @@ def city():
     
     form = CityForm()
     if form.validate_on_submit():
-        houses = db.session.query(House).filter_by(city=str(form.city_name.data)).all()
-    return render_template('home/query/city.html',title="Search Form",form=form,houses=houses)
+        houses = db.session.query(House).filter(House.city==str(form.city_name.data)).all()
+        return render_template('home/query/city.html',title="Search Form",form=form,houses=houses)

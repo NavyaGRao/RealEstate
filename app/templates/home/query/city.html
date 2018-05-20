@@ -11,43 +11,24 @@
       <div class="inner">
 	  {{  wtf.quick_form(form)  }}
           <div class="center" style="width:100%; margin-left: 100px;">
-		  
-		   
-            
-			
-			
             <table class="table table-striped table-bordered">
               <thead>
                 <tr>
-                  <th width="15%"> City </th>
-                 
-				  
+                  <th width="15%"> City </th> 
                 </tr>
               </thead>
               <tbody>
                {% for house in houses %}
                 <tr>
-                  <td> {{ house.city }} </td>
-                  
-				 
-				 
-				  
-                  
-                  
+                  <td> {{ house.city }} </td>  
                 </tr>
               {% endfor %}
               </tbody>
             </table>
           </div>
-          
-        
-
-
-          </div>
-          
       </div>
     </div>
   </div>
 </div>
-</div>
+
 {% endblock %}
