@@ -19,4 +19,11 @@ def dashboard():
     Render the dashboard template on the /dashboard route
     """
     return render_template('home/dashboard.html', title="Dashboard")
-    
+
+@home.route('/searchpage')
+@login_required
+def searchpage():
+    """
+    Render the homepage template on the / route
+    """
+    return render_template('home/query/searchpage.html', title="Search")

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Search for properties{% endblock %}
+{% block body %}
+<div class="intro-header spl">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="intro-message">
+                    <h1>Search</h1>
+                    <h2>Choose your query item</h2>
+                    <button class="button button5"><a class="but" href="{{ url_for('home.dashboboard') }}">B Y    C A T E G O R Y </a></button>
+                <button class="button button5"><a class="but" href="{{ url_for('home.dashboboard') }}">>B Y   P R I C E</a></button>
+                <button class="button button5"><a class="but" href="{{ url_for('home.dashboboard') }}">B Y    L O C A T I O N</a></button>
+                <button class="button button5"><a class="but" href="{{ url_for('home.dashboboard') }}"> B Y   S P E C I A L   A T T R A C T I O N S</a></button>
+                <button class="button button5"><a class="but" href="{{ url_for('home.dashboboard') }}"> B Y   C A T E G O R Y   A N D   P R I C E S </a></button>
+                    <button class="button button5"><a class="but">B Y   C A T E G O R Y    P R I C E S   A N D  S T A R T   D A T E </a></button>
+                    <style>
+.spl{
+ padding-top: 0px;
+    padding-bottom: 50px;
+    text-align: center;
+    color: #f8f8f8;
+    background: url(../static/img/intro_bg.jpg) no-repeat center center;
+    background-size: cover;
+    height: 100%;
+}
+.button {
+-webkit-transition-duration:0.4s;
+transition-duration:0.4s;
+   border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+	font-family: 'Oswald Light', sans-serif;
+    cursor: pointer;
+}
+                        .button5:hover{
+border-radius: 12px;
+background-color:#ffffff75;
+color:white;
+box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.button5 {
+margin-bottom:10px;
+    background-color: #ffffffa6;
+    color: black;
+    width:50%;
+    height:40px;
+	 box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+	 white-space:pre;
+}
+.but{
+color:#bf6a00;
+}
+.but:hover{
+color:green;
+text-decoration:none;
+}
+                    </style>
+                    <hr class="intro-divider">
+                    </ul>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
