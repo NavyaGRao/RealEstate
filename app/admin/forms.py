@@ -55,6 +55,7 @@ class sAmountForm(FlaskForm):
     amount=IntegerField('Enter your Budget',validators=[DataRequired()])
     submit=SubmitField('Search')
     
-class FeaturesForm(FlaskForm):
-    features=StringField('Interested City',validators=[DataRequired()])
+class AmenitiesForm(FlaskForm):
+    balcony=StringField('Balcony',validators=[DataRequired()])
+    utility=StringField('Utility',validators=[DataRequired()])
     submit=SubmitField('Search')

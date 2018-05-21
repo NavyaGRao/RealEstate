@@ -4,7 +4,7 @@ from flask import abort, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required
 import sys
 from . import admin
-from .forms import HouseForm, SiteForm,CityForm,sCityForm,RoomForm,AmountForm,sAmountForm
+from .forms import HouseForm, SiteForm,CityForm,sCityForm,RoomForm,AmountForm,sAmountForm,AmenitiesForm
 from .. import db
 from ..models import House, Site,User
 
@@ -267,6 +267,8 @@ def room():
     form = RoomForm()
     if form.validate_on_submit():
         houses = db.session.query(House).filter(House.room_cnt==int(form.room_cnt.data))
+    else:
+        flash('No entries found. ')
     return render_template('home/query/room.html',title="Search Form",form=form,houses=houses)
     
 @admin.route('/amount',methods=['GET','POST'])
@@ -284,3 +286,12 @@ def samount():
     if form.validate_on_submit():
         sites = db.session.query(Site).filter(Site.amount<=int(form.amount.data))
     return render_template('home/query/samount.html',title="Search Form",form=form,sites=sites)
+ 
+@admin.route('/amenities',methods=['GET','POST'])
+def amenities():
+    houses=""
+    form=AmenitiesForm()
+    if form.validate_on_submit():
+        houses=db.session.query(House).filter(House.balcony==int(form.balcony.data) or House.utility==int(form.utility.data))
+    return render_template('home/query/amenities.html',title="Search Form",form=form,houses=houses)
+        
