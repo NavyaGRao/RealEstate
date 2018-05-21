@@ -3,7 +3,7 @@
 
 
 {% extends "base.html" %}
-{% block title %} Searched by city {% endblock %}
+{% block title %} Searched by rooms {% endblock %}
 {% block body %}
 <div class="content-section">
   <div class="outer">
@@ -17,7 +17,7 @@
                   <th width="15%"> Type </th>
                   <th width="15%"> House number </th> 
                   <th width="15%"> Area </th> 
-                  <th width="15%"> Room count </th>
+                  <th width="15%"> City </th>
                   <th width="15%"> Bath count </th> 
                 </tr>
               </thead>
@@ -27,7 +27,7 @@
                   <td> {{ house.type }} </td> 
                   <td> {{ house.house_num }} </td>
                   <td> {{ house.area }} </td>
-                  <td> {{ house.room_cnt }} </td>
+                  <td> {{ house.city }} </td>
                   <td> {{ house.bath_cnt }} </td>
                 </tr>
               {% endfor %}

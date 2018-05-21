@@ -4,7 +4,7 @@ from flask import abort, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required
 import sys
 from . import admin
-from .forms import HouseForm, SiteForm
+from .forms import HouseForm, SiteForm,CityForm,sCityForm,RoomForm,AmountForm,sAmountForm
 from .. import db
 from ..models import House, Site,User
 
@@ -244,3 +244,43 @@ def delete_site(id):
     return redirect(url_for('admin.list_sites'))
     
     return render_template(title="Delete Site")
+    
+@admin.route('/city',methods=['GET','POST'])
+def city():
+    houses=""
+    form = CityForm()
+    if form.validate_on_submit():
+        houses = db.session.query(House).filter(House.city==str(form.city_name.data))
+    return render_template('home/query/city.html',title="Search Form",form=form,houses=houses)
+    
+@admin.route('/scity',methods=['GET','POST'])
+def scity():
+    sites=""
+    form = sCityForm()
+    if form.validate_on_submit():
+        sites = db.session.query(Site).filter(Site.city==str(form.city_name.data))
+    return render_template('home/query/scity.html',title="Search Form",form=form,sites=sites)
+    
+@admin.route('/room',methods=['GET','POST'])
+def room():
+    houses=""
+    form = RoomForm()
+    if form.validate_on_submit():
+        houses = db.session.query(House).filter(House.room_cnt==int(form.room_cnt.data))
+    return render_template('home/query/room.html',title="Search Form",form=form,houses=houses)
+    
+@admin.route('/amount',methods=['GET','POST'])
+def amount():
+    houses=""
+    form = AmountForm()
+    if form.validate_on_submit():
+        houses = db.session.query(House).filter(House.amount<=int(form.amount.data))
+    return render_template('home/query/amount.html',title="Search Form",form=form,houses=houses)
+    
+@admin.route('/samount',methods=['GET','POST'])
+def samount():
+    sites=""
+    form = sAmountForm()
+    if form.validate_on_submit():
+        sites = db.session.query(Site).filter(Site.amount<=int(form.amount.data))
+    return render_template('home/query/samount.html',title="Search Form",form=form,sites=sites)

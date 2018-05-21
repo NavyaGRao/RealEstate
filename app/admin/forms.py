@@ -33,3 +33,28 @@ class SiteForm(FlaskForm):
     amount = IntegerField('Amount' ,validators=[DataRequired()] )
     description = StringField('Description', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+class CityForm(FlaskForm):
+
+    city_name = StringField('Interested City',validators=[DataRequired()])
+    submit=SubmitField('Search')
+    
+class sCityForm(FlaskForm):
+    city_name = StringField('Interested City',validators=[DataRequired()])
+    submit=SubmitField('Search')
+    
+class RoomForm(FlaskForm):
+    room_cnt=IntegerField('Enter rooms',validators=[DataRequired()])
+    submit=SubmitField('Search')
+    
+class AmountForm(FlaskForm):
+    amount=IntegerField('Enter your Budget',validators=[DataRequired()])
+    submit=SubmitField('Search')
+    
+class sAmountForm(FlaskForm):
+    amount=IntegerField('Enter your Budget',validators=[DataRequired()])
+    submit=SubmitField('Search')
+    
+class FeaturesForm(FlaskForm):
+    features=StringField('Interested City',validators=[DataRequired()])
+    submit=SubmitField('Search')

@@ -34,3 +34,5 @@ if defined _OLD_VIRTUAL_PYTHONPATH (
 ) else (
     set "_OLD_VIRTUAL_PYTHONPATH=%PYTHONPATH%"
 )
+set flask_config=development
+set flask_app=run.py

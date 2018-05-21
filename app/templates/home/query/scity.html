@@ -14,21 +14,21 @@
             <table class="table table-striped table-bordered">
               <thead>
                 <tr>
-                  <th width="15%"> Type </th>
-                  <th width="15%"> House number </th> 
-                  <th width="15%"> Area </th> 
-                  <th width="15%"> Room count </th>
-                  <th width="15%"> Bath count </th> 
+                  
+                  <th width="15%"> site_num </th>
+                  <th width="15%"> Area  </th>
+                  <th width="15%"> sq_feet </th>
+                  <th width="15%"> amount </th>
+                  
                 </tr>
               </thead>
               <tbody>
-               {% for house in houses %}
+               {% for site in sites %}
                 <tr>
-                  <td> {{ house.type }} </td> 
-                  <td> {{ house.house_num }} </td>
-                  <td> {{ house.area }} </td>
-                  <td> {{ house.room_cnt }} </td>
-                  <td> {{ house.bath_cnt }} </td>
+                  <td> {{ site.site_num }} </td>
+                    <td> {{ site.area }} </td>
+                    <td> {{ site.sq_feet }} </td>
+                    <td> {{ site.amount }} </td>
                 </tr>
               {% endfor %}
               </tbody>
